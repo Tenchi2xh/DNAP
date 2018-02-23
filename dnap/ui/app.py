@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import wx
 import sys
 
@@ -41,7 +39,3 @@ def start():
         scheduler.add_job(update_icon, trigger="cron", second="*")
 
     app.MainLoop()
-
-
-if __name__ == "__main__":
-    start()
