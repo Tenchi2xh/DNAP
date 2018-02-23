@@ -12,12 +12,11 @@ class Dnap(wx.App):
         return True
 
 
-def start():
+def start(scheduler):
     app = Dnap(False)
 
     if sys.platform == "darwin":
         from AppKit import NSUserDefaults
-        from apscheduler.schedulers.background import BackgroundScheduler
         from .tray import TRAY_ICON_BLACK, TRAY_ICON_WHITE
 
         def is_dark():
@@ -34,8 +33,7 @@ def start():
                 else:
                     app.tray.set_icon(TRAY_ICON_BLACK)
 
-        scheduler = BackgroundScheduler()
-        scheduler.start()
+
         scheduler.add_job(update_icon, trigger="cron", second="*")
 
     app.MainLoop()
