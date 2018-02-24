@@ -1,8 +1,8 @@
-- [ ] Import code from DNAP CLI
-    - [ ] Saved cache in user folder should now be a folder instead of just a JSON file
-    - [ ] Saved cache folder also includes:
-        - [ ] Last scrape result
-        - [ ] Image cache
+- [x] Import code from DNAP CLI
+    - [x] Saved cache in user folder should now be a folder instead of just a JSON file
+    - [x] Saved cache folder also includes:
+        - [x] Last scrape result
+        - [x] Image cache
     - [ ] Consolidate model
         - [ ] Album releases
         - [ ] Spiders
@@ -22,7 +22,7 @@
         - [ ] Adds custom spider to user folder
 - [ ] Tray menu
     - [ ] Latest scrape results / in progress
-    - [ ] Latest scraped record
+    - [x] Latest scraped record
     - [x] Mac theme support
 - [ ] Notifications
     - [ ] Ubuntu https://askubuntu.com/questions/616985/how-do-i-send-desktop-notifications-using-python-3

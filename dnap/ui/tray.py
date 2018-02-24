@@ -1,9 +1,13 @@
 import wx
+import os
+import json
 import wx.adv
+import requests
 from io import BytesIO
 
 from .util import create_menu_item, crop_text
 from ..util import resource_path
+from .. import get_picture, cache_releases_path, cache_result_path
 
 
 # FIXME: Should remain the same color when clicked in dark mode
@@ -13,15 +17,16 @@ THUMB_SIZE = 128
 NOP = lambda event: None
 
 
-# FIXME
-import os
-import json
-import requests
 def latest_scraped():
-    with open(os.path.expanduser("~/.dnap"), "r") as f:
+    with open(cache_releases_path, "r") as f:
         releases = json.load(f)
-    #return [r for r in releases if r["title"] == "MOTHER 2"][0]
     return max(releases, key=lambda r: r["first_seen"])
+
+
+def last_scrape_result():
+    with open(cache_result_path, "r") as f:
+        new_releases = json.load(f)["new_releases"]
+    return new_releases
 
 
 class DnapTaskBarIcon(wx.adv.TaskBarIcon):
@@ -49,9 +54,7 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         menu_item = wx.MenuItem(menu, -1, "%s on %s" % (release["price"], release["source"]))
         menu.Bind(wx.EVT_MENU, NOP, id=menu_item.GetId())
 
-        # FIXME: cache manager
-        request = requests.get(release["picture"])
-        image = wx.Image(BytesIO(request.content))
+        image = wx.Image(get_picture(release))
         ratio = image.Width / image.Height
         if image.Width > image.Height:
             image.Rescale(THUMB_SIZE, THUMB_SIZE / ratio, quality=wx.IMAGE_QUALITY_HIGH)
