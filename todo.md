@@ -1,33 +1,38 @@
-- Browse window
-    - Infinite scroll https://stackoverflow.com/questions/21377946/creating-a-scrolling-panel-in-wxpython
-    - Reads the saved cache
-    - Each item loads the picture and caches it
-    - Price, seen date
-    - Click on row opens page
-- Preferences window
-    - Scrape interval
-    - Enable notification
-    - Select spiders
-    - Add custom spider button
-        - Opens popup to choose python file
-        - Adds custom spider to user folder
-- Tray menu
-    - Latest scrape results / in progress
-    - Latest scraped record
-- Notifications
-    - Ubuntu https://askubuntu.com/questions/616985/how-do-i-send-desktop-notifications-using-python-3
-    - Windows 10 https://github.com/jithurjacob/Windows-10-Toast-Notifications
-    - Mac
-        - https://stackoverflow.com/a/23980561/8021426
-        - https://stackoverflow.com/a/24940893/8021426
-- Scheduled job
-- Resources packaging
-    - https://stackoverflow.com/questions/27829754/include-entire-directory-in-python-setup-py-data-files
-    - http://www.py2exe.org/index.cgi/data_files
-- Build scripts
-    - py2exe
-    - mac freeze
-        - bundle with https://stackoverflow.com/a/14802918/8021426
-
-
-https://wiki.wxpython.org/Optimizing%20for%20Mac%20OS%20X
+- [ ] Import code from DNAP CLI
+    - [ ] Saved cache in user folder should now be a folder instead of just a JSON file
+    - [ ] Saved cache folder also includes:
+        - [ ] Last scrape result
+        - [ ] Image cache
+    - [ ] Consolidate model
+        - [ ] Album releases
+        - [ ] Spiders
+    - [ ] Scheduled job for scraping
+- [ ] Browse window
+    - [ ] Infinite scroll https://stackoverflow.com/questions/21377946/creating-a-scrolling-panel-in-wxpython
+    - [ ] Reads the saved cache
+    - [ ] Each item loads the picture and caches it
+    - [ ] Price, seen date
+    - [ ] Click on row opens page
+- [ ] Preferences window
+    - [ ] Scrape interval
+    - [ ] Enable notification
+    - [ ] Select spiders
+    - [ ] Add custom spider button
+        - [ ] Opens popup to choose python file
+        - [ ] Adds custom spider to user folder
+- [ ] Tray menu
+    - [ ] Latest scrape results / in progress
+    - [ ] Latest scraped record
+    - [x] Mac theme support
+- [ ] Notifications
+    - [ ] Ubuntu https://askubuntu.com/questions/616985/how-do-i-send-desktop-notifications-using-python-3
+    - [x] Windows 10 https://github.com/jithurjacob/Windows-10-Toast-Notifications
+    - [x] Mac
+        - [x] https://stackoverflow.com/a/23980561/8021426
+        - [x] https://stackoverflow.com/a/24940893/8021426
+- [ ] Build scripts for pyInstaller
+    - [x] Mac
+    - [ ] Windows
+    - [ ] Linux
+- [ ] Optimize UI for specific systems
+    - [ ] https://wiki.wxpython.org/Optimizing%20for%20Mac%20OS%20X
