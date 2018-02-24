@@ -12,5 +12,3 @@ def notify(title, subtitle, message, icon=None):
 
     notification.setDeliveryDate_(Foundation.NSDate.dateWithTimeInterval_sinceDate_(0, Foundation.NSDate.date()))
     NSUserNotificationCenter.defaultUserNotificationCenter().scheduleNotification_(notification)
-
-notify("Test", "Hello", "This is some text.", "resources/icon/black/128.png")

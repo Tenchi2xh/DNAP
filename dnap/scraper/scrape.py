@@ -24,7 +24,7 @@ from .spiders import mondo
 all_labels = list(filter(lambda n: not n.startswith("__"), dir(spiders)))
 
 
-def scrape():
+def scrape(verbose=False):
     temp_path = mkdtemp()
 
     settings = {
@@ -64,6 +64,8 @@ def scrape():
 
     if not os.path.isdir(cache_path):
         os.mkdir(cache_path)
+
+    if not os.path.isfile(cache_releases_path):
         with open(cache_releases_path, "w") as f:
             f.write("[]")
 
@@ -77,29 +79,32 @@ def scrape():
         if (release["source"], release["title"]) not in existing_titles:
             new_releases.append(release)
 
+    with open(cache_result_path, "w") as f:
+        f.write(json.dumps({
+            "new_releases": len(new_releases)
+        }))
+
     if new_releases:
         n = len(new_releases)
-        print("Found %d new release%s:" % (n, "s" if n > 1 else ""))
-        for i, release in enumerate(new_releases):
-            print("%3d. %s – %s (%s)" % (i, release["source"], release["title"], release["price"]))
-            print("     %s" % release["link"])
+        if verbose:
+            print("Found %d new release%s:" % (n, "s" if n > 1 else ""))
+            for i, release in enumerate(new_releases):
+                print("%3d. %s – %s (%s)" % (i, release["source"], release["title"], release["price"]))
+                print("     %s" % release["link"])
 
         persisted.extend(new_releases)
         persisted = sorted(persisted, key=lambda release: -release["first_seen"])
 
         with open(cache_releases_path, "w") as f:
             f.write(json.dumps(persisted))
-        with open(cache_result_path, "w") as f:
-            f.write(json.dumps({
-                "new_releases": len(new_releases)
-            }))
 
         return new_releases
 
     else:
-        print("No new release found!")
+        if verbose:
+            print("No new release found!")
         return []
 
 
 if __name__ == "__main__":
-    scrape()
+    scrape(verbose=True)
