@@ -15,6 +15,11 @@
     - Latest scrape results / in progress
     - Latest scraped record
 - Notifications
+    - Ubuntu https://askubuntu.com/questions/616985/how-do-i-send-desktop-notifications-using-python-3
+    - Windows 10 https://github.com/jithurjacob/Windows-10-Toast-Notifications
+    - Mac
+        - https://stackoverflow.com/a/23980561/8021426
+        - https://stackoverflow.com/a/24940893/8021426
 - Scheduled job
 - Resources packaging
     - https://stackoverflow.com/questions/27829754/include-entire-directory-in-python-setup-py-data-files
