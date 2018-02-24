@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-from scrapy.crawler import CrawlerProcess
 import os
 import json
 import shutil
 from tempfile import mkdtemp
+from twisted.internet import reactor
+from scrapy.crawler import CrawlerRunner
 
 from .. import cache_path, cache_releases_path, cache_result_path
 
@@ -34,19 +35,25 @@ def scrape(verbose=False):
         "FEED_URI": os.path.join(temp_path, "%(name)s")
     }
 
-    process = CrawlerProcess(settings)
-    process.crawl(iam8bit)
-    process.crawl(minorityrecords)
-    process.crawl(theyetee)
-    process.crawl(shiptoshore)
-    process.crawl(datadiscs)
-    process.crawl(lacedrecords)
-    process.crawl(thinkgeek)
-    process.crawl(turntablelab)
-    process.crawl(fangamer)
-    process.crawl(blackscreen)
-    process.crawl(mondo)
-    process.start()
+    runner = CrawlerRunner(settings)
+    runner.crawl(iam8bit)
+    runner.crawl(minorityrecords)
+    runner.crawl(theyetee)
+    runner.crawl(shiptoshore)
+    runner.crawl(datadiscs)
+    runner.crawl(lacedrecords)
+    runner.crawl(thinkgeek)
+    runner.crawl(turntablelab)
+    runner.crawl(fangamer)
+    runner.crawl(blackscreen)
+    runner.crawl(mondo)
+    d = runner.join()
+    d.addBoth(lambda _: reactor.stop())
+    print("Scraping...")
+    # Using a runner instead of a process here
+    # Because of http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions#Igetexceptions.ValueError:signalonlyworksinmainthreadwhenItrytorunmyTwistedprogramWhatswrong
+    # (And we can't give that argument with Process which doesn't give us control over the reactor)
+    reactor.run(installSignalHandlers=0)
 
     releases = []
     for file in os.listdir(temp_path):
@@ -55,6 +62,7 @@ def scrape(verbose=False):
             releases.extend(json.loads(raw_json))
     shutil.rmtree(temp_path)
 
+    print("Found %d releases." % len(releases))
 #    print(json.dumps(releases, indent=4))
 #    return
 
