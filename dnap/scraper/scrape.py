@@ -3,9 +3,11 @@
 import os
 import json
 import shutil
+import pathlib
 from tempfile import mkdtemp
 from twisted.internet import reactor
 from scrapy.crawler import CrawlerRunner
+from scrapy.utils.log import configure_logging
 
 from .. import cache_path, cache_releases_path, cache_result_path
 
@@ -28,11 +30,12 @@ all_labels = list(filter(lambda n: not n.startswith("__"), dir(spiders)))
 def scrape(verbose=False):
     temp_path = mkdtemp()
 
+    configure_logging({"LOG_FORMAT": "%(levelname)s: %(message)s", "LOG_LEVEL": "WARN"})
     settings = {
         "LOG_LEVEL": "WARN",
         "USER_AGENT": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)",
         "FEED_FORMAT": "json",
-        "FEED_URI": os.path.join(temp_path, "%(name)s")
+        "FEED_URI": os.path.join(pathlib.Path(temp_path).as_uri(), "%(name)s")
     }
 
     runner = CrawlerRunner(settings)
@@ -63,8 +66,6 @@ def scrape(verbose=False):
     shutil.rmtree(temp_path)
 
     print("Found %d releases." % len(releases))
-#    print(json.dumps(releases, indent=4))
-#    return
 
     for label in all_labels:
         if not any(release["source"] == label for release in releases):
