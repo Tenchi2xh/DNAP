@@ -6,7 +6,7 @@
     - [ ] Consolidate model
         - [ ] Album releases
         - [ ] Spiders
-    - [ ] Scheduled job for scraping
+    - [x] Scheduled job for scraping
 - [ ] Browse window
     - [ ] Infinite scroll https://stackoverflow.com/questions/21377946/creating-a-scrolling-panel-in-wxpython
     - [ ] Reads the saved cache
