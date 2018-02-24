@@ -7,7 +7,7 @@ import webbrowser
 from io import BytesIO
 
 from .util import create_menu_item, crop_text
-from ..util import resource_path, get_picture, latest_scraped
+from ..util import resource_path, get_picture, latest_scraped, last_scrape_result
 from .. import cache_releases_path, cache_result_path
 
 
@@ -26,9 +26,15 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.on_left_down)
 
     def CreatePopupMenu(self):
+        result = last_scrape_result()
+        new_releases = "%d new release%s" % (result, "s" if result > 0 else "")
+        last_scrape_message = "Last scrape: %s" % (new_releases if result else "no new releases")
+
         menu = wx.Menu()
         create_menu_item(menu, "Browse records\tCTRL+B", NOP)
         create_menu_item(menu, "Preferences\tCTRL+,", NOP)
+        menu.AppendSeparator()
+        create_menu_item(menu, last_scrape_message, NOP).Enable(False)
         self.create_release_menu_item(menu, latest_scraped())
         menu.AppendSeparator()
         create_menu_item(menu, "Exit", self.on_exit)
