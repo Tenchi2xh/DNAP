@@ -3,6 +3,7 @@ import os
 import json
 import wx.adv
 import requests
+import webbrowser
 from io import BytesIO
 
 from .util import create_menu_item, crop_text
@@ -40,7 +41,7 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         create_menu_item(menu, crop_text(release["title"], limit=45), NOP).Enable(False)
 
         menu_item = wx.MenuItem(menu, -1, "%s on %s" % (release["price"], release["source"]))
-        menu.Bind(wx.EVT_MENU, NOP, id=menu_item.GetId())
+        menu.Bind(wx.EVT_MENU, lambda e: webbrowser.open(release["link"]), id=menu_item.GetId())
 
         image = wx.Image(get_picture(release))
         ratio = image.Width / image.Height
