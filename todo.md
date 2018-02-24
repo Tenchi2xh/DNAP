@@ -33,6 +33,8 @@
 - [ ] Build scripts for pyInstaller
     - [x] Mac
     - [ ] Windows
+        - [x] Make it work
+        - [ ] Create icon (imagemagick? https://gist.github.com/pfig/1808188 https://www.imagemagick.org/script/download.php#windows)
     - [ ] Linux
 - [ ] Optimize UI for specific systems
     - [ ] https://wiki.wxpython.org/Optimizing%20for%20Mac%20OS%20X
