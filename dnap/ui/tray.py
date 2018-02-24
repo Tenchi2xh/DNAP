@@ -6,8 +6,8 @@ import requests
 from io import BytesIO
 
 from .util import create_menu_item, crop_text
-from ..util import resource_path
-from .. import get_picture, cache_releases_path, cache_result_path
+from ..util import resource_path, get_picture, latest_scraped
+from .. import cache_releases_path, cache_result_path
 
 
 # FIXME: Should remain the same color when clicked in dark mode
@@ -15,18 +15,6 @@ TRAY_ICON_WHITE = resource_path("resources/icon/white/128.png")
 TRAY_ICON_BLACK = resource_path("resources/icon/black/128.png")
 THUMB_SIZE = 128
 NOP = lambda event: None
-
-
-def latest_scraped():
-    with open(cache_releases_path, "r") as f:
-        releases = json.load(f)
-    return max(releases, key=lambda r: r["first_seen"])
-
-
-def last_scrape_result():
-    with open(cache_result_path, "r") as f:
-        new_releases = json.load(f)["new_releases"]
-    return new_releases
 
 
 class DnapTaskBarIcon(wx.adv.TaskBarIcon):
