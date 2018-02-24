@@ -17,12 +17,20 @@ from dnap.__main__ import main
 main()
 EOF
 
+SCRAPY_PATH=$(python -c 'import os; import scrapy; print(os.path.dirname(scrapy.__file__))')
+
 pyinstaller \
     --clean \
     --noupx \
     --onefile \
     --name DNAP \
     --add-data resources:resources \
+    --add-data $SCRAPY_PATH:scrapy \
+    --hidden-import email.mime \
+    --hidden-import email.mime.multipart \
+    --hidden-import email.mime.text \
+    --hidden-import twisted.web.client \
+    --hidden-import queuelib \
     --windowed \
     --icon build/DNAP.icns \
     --osx-bundle-identifier net.team2xh.dnap \
