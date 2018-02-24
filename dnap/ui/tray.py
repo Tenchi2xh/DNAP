@@ -2,12 +2,13 @@ import wx
 import wx.adv
 from io import BytesIO
 
-from . import util
+from .util import create_menu_item, crop_text
+from ..util import resource_path
 
 
 # FIXME: Should remain the same color when clicked in dark mode
-TRAY_ICON_WHITE = "resources/icon/white/128.png"
-TRAY_ICON_BLACK = "resources/icon/black/128.png"
+TRAY_ICON_WHITE = resource_path("resources/icon/white/128.png")
+TRAY_ICON_BLACK = resource_path("resources/icon/black/128.png")
 THUMB_SIZE = 128
 NOP = lambda event: None
 
@@ -32,18 +33,18 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
 
     def CreatePopupMenu(self):
         menu = wx.Menu()
-        util.create_menu_item(menu, "Browse records\tCTRL+B", NOP)
-        util.create_menu_item(menu, "Preferences\tCTRL+,", NOP)
+        create_menu_item(menu, "Browse records\tCTRL+B", NOP)
+        create_menu_item(menu, "Preferences\tCTRL+,", NOP)
         self.create_release_menu_item(menu, latest_scraped())
         menu.AppendSeparator()
-        util.create_menu_item(menu, "Exit", self.on_exit)
+        create_menu_item(menu, "Exit", self.on_exit)
         return menu
 
     # FIXME: in case of no releases
     def create_release_menu_item(self, menu, release):
         menu.AppendSeparator()
-        util.create_menu_item(menu, "Latest release:", NOP).Enable(False)
-        util.create_menu_item(menu, util.crop_text(release["title"], limit=45), NOP).Enable(False)
+        create_menu_item(menu, "Latest release:", NOP).Enable(False)
+        create_menu_item(menu, crop_text(release["title"], limit=45), NOP).Enable(False)
 
         menu_item = wx.MenuItem(menu, -1, "%s on %s" % (release["price"], release["source"]))
         menu.Bind(wx.EVT_MENU, NOP, id=menu_item.GetId())
