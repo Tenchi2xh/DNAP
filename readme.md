@@ -15,7 +15,7 @@ DISCLOSURE: The author is not responsible any damages caused to your wallet.
 
 Download and launch the applications from the [releases](https://github.com/Tenchi2xh/DNAP/releases) page.
 
-### From source
+### Run from source
 
 Install dependencies using the requirements file relevant to your operating system:
 
@@ -28,6 +28,25 @@ Run the application as a module:
 ```bash
 python3 -m dnap
 ```
+
+## Building
+
+Common dependencies:
+
+```bash
+pip3 install requirements_[macos|windows].txt
+pip3 install pyInstaller
+```
+
+### Mac
+
+Just run `build_macos.sh`
+
+### Windows
+
+The Visual C++ Build Tools are required for some of the dependencies. You can get them here: http://landinghub.visualstudio.com/visual-cpp-build-tools
+
+Then, run `build_windows.bat`
 
 ## Attribution
 
