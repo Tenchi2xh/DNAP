@@ -13,6 +13,7 @@
 - [ ] Preferences window
     - [ ] Scrape interval
     - [ ] Enable notification
+    - [ ] Start with system option?
     - [ ] Select spiders
     - [ ] Add custom spider button
         - [ ] Opens popup to choose python file
