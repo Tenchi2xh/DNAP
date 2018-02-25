@@ -22,10 +22,10 @@ class BrowseFrame(wx.Frame):
         self.thread = None
 
         # TODO: Refresh when file is refreshed
-        self.releases = sorted(get_releases(), key=lambda release: release["first_seen"])
+        self.releases = sorted(get_releases(), key=lambda release: -release["first_seen"])
         self.labels = ["all"] + sorted(list(set([release["source"] for release in self.releases])))
 
-        self.init_position(430, 730)
+        self.init_position(435, 730)
         self.init_content()
         self.show_releases("all")
 
@@ -47,6 +47,7 @@ class BrowseFrame(wx.Frame):
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         combo = wx.Choice(self, -1, choices=self.labels)
+        combo.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, lambda e: self.show_releases(e.GetString()))
 
         self.init_list()
@@ -68,6 +69,7 @@ class BrowseFrame(wx.Frame):
         self.list = AutoWidthListCtrl(self, style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_NO_HEADER)
         self.list.setResizeColumn(2)
         self.list.Bind(wx.EVT_SCROLLWIN, self.handle_scroll)
+        self.list.Bind(wx.EVT_MOUSEWHEEL, self.handle_scroll)
 
         cover_column = wx.ListItem()
         cover_column.SetMask(wx.LIST_MASK_TEXT)
@@ -93,8 +95,6 @@ class BrowseFrame(wx.Frame):
     def handle_scroll(self, event):
         event.Skip()
 
-        if event.GetOrientation() != wx.VERTICAL:
-            return
         if self.list.GetItemCount() == len(self.current_releases):
             return
 
@@ -108,7 +108,7 @@ class BrowseFrame(wx.Frame):
     def add_release(self, release, release_index):
         bmp = get_bitmap(release, resize_width=THUMB_SIZE)
         image_index = self.image_list.Add(bmp)
-        index = self.list.InsertItem((1 << 63) - 1, image_index)
+        index = self.list.InsertItem((1 << 31) - 1, image_index)
         self.list.SetItem(index, 1, "  %s – %s" % (release["source"], release["title"]))
         self.list.SetItem(index, 2, release["price"])
         self.list.SetItemData(index, release_index)

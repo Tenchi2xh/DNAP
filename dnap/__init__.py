@@ -29,7 +29,7 @@ formatter = logging.Formatter(
 )
 
 if getattr(sys, "frozen", False):
-    handler = logging.FileHandler(os.path.join(cache_path, "dnap.log"))
+    handler = logging.FileHandler(os.path.join(cache_path, "dnap.log"), encoding="utf-8")
     handler.setLevel(logging.DEBUG)
     handler.setFormatter(formatter)
 else:
