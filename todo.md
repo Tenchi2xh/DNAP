@@ -3,17 +3,13 @@
     - [x] Saved cache folder also includes:
         - [x] Last scrape result
         - [x] Image cache
-    - [ ] Consolidate model
-        - [ ] Album releases
-        - [ ] Spiders
-    - [x] Scheduled job for scraping
-- [ ] Browse window
+- [x] Scheduled job for scraping
+- [x] Browse window
     - [x] Infinite scroll
     - [x] Reads the saved cache
     - [x] Each item loads the picture and caches it
-    - [ ] Price, seen date -> seen date as tooltip?
-    - [ ] Click on row opens page
-    - [ ] Select on hover
+    - [x] Click on row opens page
+    - [x] Select on hover
 - [ ] Preferences window
     - [ ] Scrape interval
     - [ ] Enable notification
@@ -29,11 +25,10 @@
     - [ ] Ubuntu https://askubuntu.com/questions/616985/how-do-i-send-desktop-notifications-using-python-3
     - [x] Windows 10
     - [x] Mac
+    - [ ] Non-native fallback for others
 - [ ] Build scripts for pyInstaller
     - [x] Mac
     - [x] Windows
         - [x] Make it work
         - [x] Create icon
     - [ ] Linux
-- [ ] Optimize UI for specific systems
-    - [ ] https://wiki.wxpython.org/Optimizing%20for%20Mac%20OS%20X
