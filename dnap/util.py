@@ -7,8 +7,6 @@ import requests
 from apscheduler.triggers.cron import CronTrigger
 
 from . import cache_releases_path, cache_result_path, cache_images_path
-from .scraper.scrape import scrape
-from .notifications import notify
 
 
 def add_cron(scheduler, callback, cron, **kwargs):
@@ -59,15 +57,3 @@ def get_picture(release):
             f.write(r.content)
 
     return image_path
-
-
-def scrape_and_notify():
-    scrape()
-    result = last_scrape_result()
-    release = latest_scraped()
-    if result:
-        title = "%d new release%s" % (result, "s" if result > 1 else "")
-        subtitle = release["title"]
-        message= "%s%s" % (release["price"] + " on " if release["price"] else "From ", release["source"])
-        picture = get_picture(release)
-        notify(title, subtitle, message, picture)

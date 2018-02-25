@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import json
 import shutil
+import random
 import pathlib
 from tempfile import mkdtemp
+from threading import Thread
 from twisted.internet import reactor
+from twisted.internet import task
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 
+from ..util import get_picture
+from ..notifications import notify
 from .. import cache_path, cache_releases_path, cache_result_path
 
 from . import spiders
@@ -27,37 +33,15 @@ from .spiders import mondo
 all_labels = list(filter(lambda n: not n.startswith("__"), dir(spiders)))
 
 
-def scrape(verbose=False):
-    temp_path = mkdtemp()
+def scrape(interval, verbose=False):
+    print("Initiating scrape")
 
-    configure_logging({"LOG_FORMAT": "%(levelname)s: %(message)s", "LOG_LEVEL": "WARN"})
-    settings = {
-        "LOG_LEVEL": "WARN",
-        "USER_AGENT": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)",
-        "FEED_FORMAT": "json",
-        "FEED_URI": os.path.join(pathlib.Path(temp_path).as_uri(), "%(name)s")
-    }
+    # Scrapy uses twisted's reactor, which can only be started once per process
+    thread = Thread(target=run_scrapes, args=(interval,), kwargs={"verbose": verbose})
+    thread.start()
 
-    runner = CrawlerRunner(settings)
-    runner.crawl(iam8bit)
-    runner.crawl(minorityrecords)
-    runner.crawl(theyetee)
-    runner.crawl(shiptoshore)
-    runner.crawl(datadiscs)
-    runner.crawl(lacedrecords)
-    runner.crawl(thinkgeek)
-    runner.crawl(turntablelab)
-    runner.crawl(fangamer)
-    runner.crawl(blackscreen)
-    runner.crawl(mondo)
-    d = runner.join()
-    d.addBoth(lambda _: reactor.stop())
-    print("Scraping...")
-    # Using a runner instead of a process here
-    # Because of http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions#Igetexceptions.ValueError:signalonlyworksinmainthreadwhenItrytorunmyTwistedprogramWhatswrong
-    # (And we can't give that argument with Process which doesn't give us control over the reactor)
-    reactor.run(installSignalHandlers=0)
 
+def process_results(temp_path, verbose):
     releases = []
     for file in os.listdir(temp_path):
         with open(os.path.join(temp_path, file), "r") as f:
@@ -107,13 +91,66 @@ def scrape(verbose=False):
         with open(cache_releases_path, "w") as f:
             f.write(json.dumps(persisted))
 
-        return new_releases
+        latest = random.choice(new_releases)
+        title = "%d new release%s" % (n, "s" if n > 1 else "")
+        subtitle = latest["title"]
+        message= "%s%s" % (latest["price"] + " on " if latest["price"] else "From ", latest["source"])
+        picture = get_picture(latest)
+        notify(title, subtitle, message, picture)
 
     else:
+        notify("No new releases", "Program is still working though", "😊")
         if verbose:
             print("No new release found!")
-        return []
+
+
+def run_scrapes(interval, verbose=False, limit=-1):
+    temp_path = mkdtemp()
+    configure_logging({"LOG_FORMAT": "%(levelname)s: %(message)s", "LOG_LEVEL": "WARN"})
+
+    settings = {
+        "LOG_LEVEL": "WARN",
+        "USER_AGENT": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)",
+        "FEED_FORMAT": "json",
+        "FEED_URI": os.path.join(pathlib.Path(temp_path).as_uri(), "%(name)s")
+    }
+
+    # Using a runner instead of a process here
+    # Because of http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions#Igetexceptions.ValueError:signalonlyworksinmainthreadwhenItrytorunmyTwistedprogramWhatswrong
+    # (And we can't give that argument with Process which doesn't give us control over the reactor)
+
+    def run_crawl():
+        runner = CrawlerRunner(settings)
+        runner.crawl(iam8bit)
+        runner.crawl(minorityrecords)
+        runner.crawl(theyetee)
+        runner.crawl(shiptoshore)
+        runner.crawl(datadiscs)
+        runner.crawl(lacedrecords)
+        runner.crawl(thinkgeek)
+        runner.crawl(turntablelab)
+        runner.crawl(fangamer)
+        runner.crawl(blackscreen)
+        runner.crawl(mondo)
+        print("Scraping...")
+        notify("Scraping...", "", "(it may crash?)")
+
+        nonlocal limit
+        limit -= 1
+
+        d = runner.join()
+        if limit == 0:
+            def process_and_stop(unused):
+                process_results(temp_path, verbose)
+                reactor.stop()
+            d.addBoth(process_and_stop)
+        else:
+            d.addBoth(lambda _: process_results(temp_path, verbose))
+
+    loop = task.LoopingCall(run_crawl)
+    loop.start(interval)
+    reactor.run(installSignalHandlers=0)
 
 
 if __name__ == "__main__":
-    scrape(verbose=True)
+    run_scrapes(100, verbose=True, limit=1)
