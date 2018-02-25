@@ -42,9 +42,11 @@ pip3 install pyInstaller
 
 Just run `build_macos.sh`
 
-### Windows
+### Windows
 
-The Visual C++ Build Tools are required for some of the dependencies. You can get them here: http://landinghub.visualstudio.com/visual-cpp-build-tools
+The [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) are required for some of the dependencies.
+
+If you want an icon to be generated for the executable, you will need to install [ImageMagick](https://www.imagemagick.org/script/download.php#windows). Install using the option `Install legacy utilities`.
 
 Then, run `build_windows.bat`
 
