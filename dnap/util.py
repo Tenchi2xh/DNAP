@@ -4,13 +4,8 @@ import sys
 import json
 import hashlib
 import requests
-from apscheduler.triggers.cron import CronTrigger
 
 from . import cache_releases_path, cache_result_path, cache_images_path
-
-
-def add_cron(scheduler, callback, cron, **kwargs):
-    scheduler.add_job(callback, trigger=CronTrigger(**cron), **kwargs)
 
 
 def resource_path(relative_path):

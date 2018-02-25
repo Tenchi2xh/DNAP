@@ -2,7 +2,6 @@ import wx
 import sys
 
 from .tray import DnapTaskBarIcon
-from ..util import add_cron
 
 
 class Dnap(wx.App):
@@ -13,11 +12,13 @@ class Dnap(wx.App):
         return True
 
 
-def start(scheduler):
+def start():
     app = Dnap(False)
 
     if sys.platform == "darwin":
         from .platforms import macos
-        add_cron(scheduler, macos.update_icon, {"second": "*"}, args=[app.tray])
+        timer = wx.Timer(app)
+        app.Bind(wx.EVT_TIMER, lambda _: macos.update_icon(app.tray), timer)
+        timer.Start(1000)
 
     app.MainLoop()
