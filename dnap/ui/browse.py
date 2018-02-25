@@ -1,6 +1,7 @@
 import wx
 import sys
 import time
+import webbrowser
 from threading import Thread
 from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
 
@@ -70,6 +71,8 @@ class BrowseFrame(wx.Frame):
         self.list.setResizeColumn(2)
         self.list.Bind(wx.EVT_SCROLLWIN, self.handle_scroll)
         self.list.Bind(wx.EVT_MOUSEWHEEL, self.handle_scroll)
+        self.list.Bind(wx.EVT_MOTION, self.handle_hover)
+        self.list.Bind(wx.EVT_LEFT_UP, self.handle_click)
 
         cover_column = wx.ListItem()
         cover_column.SetMask(wx.LIST_MASK_TEXT)
@@ -152,3 +155,27 @@ class BrowseFrame(wx.Frame):
         to_load = self.list.GetCountPerPage() + LOOK_AHEAD
         self.thread = Thread(target=self.add_releases, args=(to_load,))
         self.thread.start()
+
+    def hovered_index(self, event):
+        pos = event.GetPosition()
+        item = self.list.HitTest(pos)
+        if item and len(item) > 0:
+            index = item[0]
+            if index >= 0:
+                return index
+
+    def handle_hover(self, event):
+        event.Skip()
+        index = self.hovered_index(event)
+        if index is not None and not self.list.IsSelected(index):
+            self.list.Select(index)
+            self.Raise()
+            self.list.SetFocus()
+
+    def handle_click(self, event):
+        event.Skip()
+        index = self.hovered_index(event)
+        if index is not None:
+            release_index = self.list.GetItemData(index)
+            release = self.current_releases[release_index]
+            webbrowser.open(release["link"])
