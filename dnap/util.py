@@ -15,12 +15,14 @@ def resource_path(relative_path):
 
 
 def latest_scraped():
+    log.debug("Fetching latest release")
     with open(cache_releases_path, "r") as f:
         releases = json.load(f)
     return max(releases, key=lambda r: r["first_seen"])
 
 
 def last_scrape_result():
+    log.debug("Fetching last scrape result")
     with open(cache_result_path, "r") as f:
         new_releases = json.load(f)["new_releases"]
     return new_releases
@@ -47,6 +49,7 @@ def get_picture(release):
 
     image_path = os.path.join(source_path, "%s%s" % (release_hash(release), get_extension(release["picture"])))
     if not os.path.isfile(image_path):
+        log.debug("Picture '%s' not cached, fetching" % (release["picture"]))
         r = requests.get(release["picture"])
         with open(image_path, "wb") as f:
             f.write(r.content)

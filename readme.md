@@ -15,6 +15,8 @@ DISCLOSURE: The author is not responsible any damages caused to your wallet.
 
 Download and launch the applications from the [releases](https://github.com/Tenchi2xh/DNAP/releases) page.
 
+When using the standalone application, logs are written in `~/.dnap/dnap.log` instead of `stdout`.
+
 ### Run from source
 
 Install dependencies using the requirements file relevant to your operating system:

@@ -3,7 +3,7 @@ from .scraper.scrape import scrape
 
 
 def main():
-    scrape(interval=15 * 60, verbose=True)
+    scrape(interval=15 * 60)
     app.start()
 
 
