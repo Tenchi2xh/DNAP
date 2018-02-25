@@ -5,15 +5,35 @@
     DNAP<sup>*</sup>
 </h1>
 
-DISCLOSURE: The author is not responsible any damages caused to your wallet.
+_DISCLOSURE: The author is not responsible any damages caused to your wallet_ 😉
 
-*<sub>Does Not Affect Purchase</sub>
+Never miss any new release from your favorite labels!
+
+<img width="1120" alt="dnap" src="https://user-images.githubusercontent.com/4116708/36647147-7b174f48-1a81-11e8-9852-e84662fbdcf4.png">
+
+Supported labels:
+
+[Black Screen Records](http://blackscreenrecords.limitedrun.com), [DATA DISCS](https://data-discs.com/collections/all), [Fangamer](https://www.fangamer.com/collections/music), [iam8bit](https://store.iam8bit.co.uk/collections/vinyl),
+<br> [Laced Records](https://www.lacedrecords.co/collections/vinyl), [Minority Records](https://www.minorityrecords.com/en/releases), [Mondo](https://mondotees.com/collections/music), [Ship to Shore PhonoCo.](https://www.shiptoshoremedia.com/store),
+<br> [The Yetee](https://theyetee.com/collections/all/Music), [ThinkGeek](https://www.thinkgeek.com/collectibles/vinyl-records), [Turntable Lab](https://www.turntablelab.com/collections/vinyl-cds-date)
+
+---
+
+## Contents
+
+- [Usage](#usage)
+    - [Download](#download)
+    - [Run from source](#run-from-source)
+- [Building](#building)
+    - [Mac](#mac)
+    - [Windows](#windows)
+- [Attribution](#attribution)
 
 ## Usage
 
-### Bundled
+### Download
 
-Download and launch the applications from the [releases](https://github.com/Tenchi2xh/DNAP/releases) page.
+Download and launch the application from the [releases](https://github.com/Tenchi2xh/DNAP/releases) page.
 
 When using the standalone application, logs are written in `~/.dnap/dnap.log` instead of `stdout`.
 
@@ -56,3 +76,5 @@ Then, run `build_windows.bat`
 
 - Tray icon made by [Those Icons](https://thoseicons.com/) from www.flaticon.com (CC 3.0 BY)
 - Application icon made by [Freepik](http://www.freepik.com") from www.flaticon.com (CC 3.0 BY)
+
+*<sub>Does Not Affect Purchase</sub>
