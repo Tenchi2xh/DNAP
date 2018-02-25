@@ -24,7 +24,7 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         super(DnapTaskBarIcon, self).__init__()
         self.frame = frame
         self.set_icon(TRAY_ICON_WHITE)
-        self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.on_left_down)
+        self.Bind(wx.adv.EVT_TASKBAR_LEFT_UP, lambda _: self.PopupMenu(self.CreatePopupMenu()))
 
     def CreatePopupMenu(self):
         result = last_scrape_result()
