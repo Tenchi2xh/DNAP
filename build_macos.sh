@@ -17,7 +17,7 @@ from dnap.__main__ import main
 main()
 EOF
 
-SCRAPY_PATH=$(python -c 'import os; import scrapy; print(os.path.dirname(scrapy.__file__))')
+SCRAPY_PATH=$(python3 -c 'import os; import scrapy; print(os.path.dirname(scrapy.__file__))')
 
 pyinstaller \
     --clean \
