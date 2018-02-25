@@ -5,11 +5,19 @@
     DNAP<sup>*</sup>
 </h1>
 
+Keep track of new vinyl albums releases, hassle-free.
+
 _DISCLOSURE: The author is not responsible any damages caused to your wallet_ 😉
 
-Never miss any new release from your favorite labels!
+What does it do?
+
+- Uses web crawlers to periodically **check for new releases** on select labels
+- Fires native OS **notifications** when new releases are scraped
+- **Browse** all previously scraped titles with links to the store
 
 <img width="1120" alt="dnap" src="https://user-images.githubusercontent.com/4116708/36647147-7b174f48-1a81-11e8-9852-e84662fbdcf4.png">
+
+<p align=center><i>Never miss new releases from your favorite labels anymore!</i></p>
 
 Supported labels:
 
