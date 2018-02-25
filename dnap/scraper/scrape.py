@@ -100,7 +100,6 @@ def process_results(temp_path, verbose):
         notify(title, subtitle, message, picture)
 
     else:
-        notify("No new releases", "Program is still working though", "😊")
         if verbose:
             print("No new release found!")
 
@@ -134,7 +133,6 @@ def run_scrapes(interval, verbose=False, limit=-1):
         runner.crawl(blackscreen)
         runner.crawl(mondo)
         print("Scraping...")
-        notify("Scraping...", "", "(it may crash?)")
 
         nonlocal limit
         limit -= 1
