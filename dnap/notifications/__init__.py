@@ -1,7 +1,7 @@
 import sys
 
-def notify(title, subtitle, message, icon):
-    pass
+def notify(title, subtitle, message, icon=None):
+    print(title, subtitle, message, icon)
 
 if sys.platform == "darwin":
     from .macos import notify
