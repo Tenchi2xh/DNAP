@@ -8,11 +8,12 @@
         - [ ] Spiders
     - [x] Scheduled job for scraping
 - [ ] Browse window
-    - [ ] Infinite scroll https://stackoverflow.com/questions/21377946/creating-a-scrolling-panel-in-wxpython
-    - [ ] Reads the saved cache
-    - [ ] Each item loads the picture and caches it
-    - [ ] Price, seen date
+    - [x] Infinite scroll
+    - [x] Reads the saved cache
+    - [x] Each item loads the picture and caches it
+    - [ ] Price, seen date -> seen date as tooltip?
     - [ ] Click on row opens page
+    - [ ] Select on hover
 - [ ] Preferences window
     - [ ] Scrape interval
     - [ ] Enable notification
@@ -20,21 +21,19 @@
     - [ ] Add custom spider button
         - [ ] Opens popup to choose python file
         - [ ] Adds custom spider to user folder
-- [ ] Tray menu
-    - [ ] Latest scrape results / in progress
+- [x] Tray menu
+    - [x] Latest scrape results
     - [x] Latest scraped record
     - [x] Mac theme support
 - [ ] Notifications
     - [ ] Ubuntu https://askubuntu.com/questions/616985/how-do-i-send-desktop-notifications-using-python-3
-    - [x] Windows 10 https://github.com/jithurjacob/Windows-10-Toast-Notifications
+    - [x] Windows 10
     - [x] Mac
-        - [x] https://stackoverflow.com/a/23980561/8021426
-        - [x] https://stackoverflow.com/a/24940893/8021426
 - [ ] Build scripts for pyInstaller
     - [x] Mac
-    - [ ] Windows
+    - [x] Windows
         - [x] Make it work
-        - [ ] Create icon (imagemagick? https://gist.github.com/pfig/1808188 https://www.imagemagick.org/script/download.php#windows)
+        - [x] Create icon
     - [ ] Linux
 - [ ] Optimize UI for specific systems
     - [ ] https://wiki.wxpython.org/Optimizing%20for%20Mac%20OS%20X

@@ -6,7 +6,8 @@ import requests
 import webbrowser
 from io import BytesIO
 
-from .util import create_menu_item, crop_text
+from .browse import BrowseFrame
+from .util import create_menu_item, crop_text, get_bitmap
 from ..util import resource_path, get_picture, latest_scraped, last_scrape_result
 from .. import cache_releases_path, cache_result_path
 
@@ -31,11 +32,16 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         last_scrape_message = "Last scrape: %s" % (new_releases if result else "no new releases")
 
         menu = wx.Menu()
-        create_menu_item(menu, "Browse records\tCTRL+B", NOP)
+
+        browse_menu = create_menu_item(menu, "Browse records\tCTRL+B", self.browse)
+        if hasattr(self, "browse_frame") and self.browse_frame:
+            browse_menu.Enable(False)
         create_menu_item(menu, "Preferences\tCTRL+,", NOP)
+
         menu.AppendSeparator()
         create_menu_item(menu, last_scrape_message, NOP).Enable(False)
         self.create_release_menu_item(menu, latest_scraped())
+
         menu.AppendSeparator()
         create_menu_item(menu, "Exit", self.on_exit)
         return menu
@@ -49,13 +55,7 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         menu_item = wx.MenuItem(menu, -1, "%s on %s" % (release["price"], release["source"]))
         menu.Bind(wx.EVT_MENU, lambda e: webbrowser.open(release["link"]), id=menu_item.GetId())
 
-        image = wx.Image(get_picture(release))
-        ratio = image.Width / image.Height
-        if image.Width > image.Height:
-            image.Rescale(THUMB_SIZE, THUMB_SIZE / ratio, quality=wx.IMAGE_QUALITY_HIGH)
-        else:
-            image.Rescale(THUMB_SIZE * ratio, THUMB_SIZE, quality=wx.IMAGE_QUALITY_HIGH)
-        menu_item.SetBitmap(wx.Bitmap(image))
+        menu_item.SetBitmap(get_bitmap(release, resize_width=THUMB_SIZE))
 
         menu.Append(menu_item)
         return menu_item
@@ -71,3 +71,8 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
     def on_exit(self, event):
         wx.CallAfter(self.Destroy)
         self.frame.Close()
+
+    def browse(self, event=None):
+        self.browse_frame = BrowseFrame(self.frame)
+        self.browse_frame.Bind(wx.EVT_CLOSE, lambda _: self.browse_frame.Destroy())
+        self.browse_frame.Show()
