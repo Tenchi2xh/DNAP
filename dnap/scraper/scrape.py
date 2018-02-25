@@ -38,6 +38,7 @@ def scrape(interval, verbose=False):
 
     # Scrapy uses twisted's reactor, which can only be started once per process
     thread = Thread(target=run_scrapes, args=(interval,), kwargs={"verbose": verbose})
+    thread.setDaemon(True)
     thread.start()
 
 
