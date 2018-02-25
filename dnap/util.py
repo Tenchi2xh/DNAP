@@ -13,11 +13,15 @@ def resource_path(relative_path):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
 
-
-def latest_scraped():
-    log.debug("Fetching latest release")
+def get_releases():
+    log.debug("Fetching releases")
     with open(cache_releases_path, "r") as f:
         releases = json.load(f)
+    return releases
+
+
+def latest_scraped():
+    releases = get_releases()
     return max(releases, key=lambda r: r["first_seen"])
 
 
