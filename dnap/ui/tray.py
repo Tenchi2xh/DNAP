@@ -11,7 +11,7 @@ from ..util import resource_path, get_picture, latest_scraped, last_scrape_resul
 from .. import cache_releases_path, cache_result_path
 
 
-# FIXME: Should remain the same color when clicked in dark mode
+# FIXME: Should remain the same color when clicked in dark mode in Mac OS
 TRAY_ICON_WHITE = resource_path("resources/icon/white/128.png")
 TRAY_ICON_BLACK = resource_path("resources/icon/black/128.png")
 THUMB_SIZE = 128

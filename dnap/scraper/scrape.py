@@ -33,16 +33,16 @@ from .spiders import mondo
 all_labels = list(filter(lambda n: not n.startswith("__"), dir(spiders)))
 
 
-def scrape(interval, verbose=False):
-    print("Initiating scrape")
+def scrape(interval):
+    log.debug("Initiating scrape")
 
     # Scrapy uses twisted's reactor, which can only be started once per process
-    thread = Thread(target=run_scrapes, args=(interval,), kwargs={"verbose": verbose})
+    thread = Thread(target=run_scrapes, args=(interval,))
     thread.setDaemon(True)
     thread.start()
 
 
-def process_results(temp_path, verbose):
+def process_results(temp_path):
     releases = []
     for file in os.listdir(temp_path):
         with open(os.path.join(temp_path, file), "r") as f:
@@ -50,11 +50,11 @@ def process_results(temp_path, verbose):
             releases.extend(json.loads(raw_json))
     shutil.rmtree(temp_path)
 
-    print("Found %d releases." % len(releases))
+    log.info("Found %d releases." % len(releases))
 
     for label in all_labels:
         if not any(release["source"] == label for release in releases):
-            print("WARNING: Label '%s' has no releases, the spider is probably out of date." % label)
+            log.warn("Label '%s' has no releases, the spider is probably out of date." % label)
 
     if not os.path.isdir(cache_path):
         os.mkdir(cache_path)
@@ -80,11 +80,10 @@ def process_results(temp_path, verbose):
 
     if new_releases:
         n = len(new_releases)
-        if verbose:
-            print("Found %d new release%s:" % (n, "s" if n > 1 else ""))
-            for i, release in enumerate(new_releases):
-                print("%3d. %s – %s (%s)" % (i, release["source"], release["title"], release["price"]))
-                print("     %s" % release["link"])
+        log.info("Found %d new release%s:" % (n, "s" if n > 1 else ""))
+        for i, release in enumerate(new_releases):
+            log.info("%3d. %s – %s (%s)" % (i, release["source"], release["title"], release["price"]))
+            log.info("     %s" % release["link"])
 
         persisted.extend(new_releases)
         persisted = sorted(persisted, key=lambda release: -release["first_seen"])
@@ -100,11 +99,10 @@ def process_results(temp_path, verbose):
         notify(title, subtitle, message, picture)
 
     else:
-        if verbose:
-            print("No new release found!")
+        log.info("No new release found!")
 
 
-def run_scrapes(interval, verbose=False, limit=-1):
+def run_scrapes(interval, limit=-1):
     temp_path = mkdtemp()
     configure_logging({"LOG_FORMAT": "%(levelname)s: %(message)s", "LOG_LEVEL": "WARN"})
 
@@ -132,7 +130,7 @@ def run_scrapes(interval, verbose=False, limit=-1):
         runner.crawl(fangamer)
         runner.crawl(blackscreen)
         runner.crawl(mondo)
-        print("Scraping...")
+        log.info("Scraping...")
 
         nonlocal limit
         limit -= 1
@@ -140,11 +138,11 @@ def run_scrapes(interval, verbose=False, limit=-1):
         d = runner.join()
         if limit == 0:
             def process_and_stop(unused):
-                process_results(temp_path, verbose)
+                process_results(temp_path)
                 reactor.stop()
             d.addBoth(process_and_stop)
         else:
-            d.addBoth(lambda _: process_results(temp_path, verbose))
+            d.addBoth(lambda _: process_results(temp_path))
 
     loop = task.LoopingCall(run_crawl)
     loop.start(interval)
@@ -152,4 +150,4 @@ def run_scrapes(interval, verbose=False, limit=-1):
 
 
 if __name__ == "__main__":
-    run_scrapes(100, verbose=True, limit=1)
+    run_scrapes(100, limit=1)
