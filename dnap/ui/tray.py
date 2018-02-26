@@ -27,6 +27,7 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.adv.EVT_TASKBAR_LEFT_UP, lambda _: self.PopupMenu(self.CreatePopupMenu()))
 
     def CreatePopupMenu(self):
+        # FIXME: If nothing, put "Waiting for first scrape..."
         result = last_scrape_result()
         new_releases = "%d new release%s" % (result, "s" if result > 0 else "")
         last_scrape_message = "Last scrape: %s" % (new_releases if result else "no new releases")
