@@ -4,7 +4,8 @@
         - [x] Last scrape result
         - [x] Image cache
 - [x] Scheduled job for scraping
-- [x] Browse window
+- [ ] Browse window
+    - [ ] Refresh button that activates when file timestamp has changed (wx.Timer?)
     - [x] Infinite scroll
     - [x] Reads the saved cache
     - [x] Each item loads the picture and caches it

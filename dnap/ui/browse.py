@@ -22,7 +22,6 @@ class BrowseFrame(wx.Frame):
         self.adding_items = False
         self.thread = None
 
-        # TODO: Refresh when file is refreshed
         self.releases = sorted(get_releases(), key=lambda release: -release["first_seen"])
         self.labels = ["all"] + sorted(list(set([release["source"] for release in self.releases])))
 
@@ -61,7 +60,6 @@ class BrowseFrame(wx.Frame):
         self.SetSizer(sizer)
 
     def init_list(self):
-        # TODO: wx.LC_VIRTUAL ?
         class AutoWidthListCtrl(wx.ListCtrl, ListCtrlAutoWidthMixin):
             def __init__(self, *args, **kwargs):
                 wx.ListCtrl.__init__(self, *args, **kwargs)

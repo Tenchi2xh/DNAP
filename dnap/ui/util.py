@@ -15,6 +15,7 @@ def crop_text(text, limit=15, suffix="..."):
 
 
 def get_bitmap(release, resize_width=None):
+    # FIXME: Make it work on High DPI displays
     image = wx.Image(get_picture(release))
 
     ratio = image.Width / image.Height
