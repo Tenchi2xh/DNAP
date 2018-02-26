@@ -10,5 +10,4 @@ def notify(title, subtitle, message, icon=None):
     if icon:
         notification.setValue_forKey_(NSImage.alloc().initWithContentsOfFile_(icon), "_identityImage")
 
-    notification.setDeliveryDate_(Foundation.NSDate.dateWithTimeInterval_sinceDate_(0, Foundation.NSDate.date()))
-    NSUserNotificationCenter.defaultUserNotificationCenter().scheduleNotification_(notification)
+    NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification_(notification)
