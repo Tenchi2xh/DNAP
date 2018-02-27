@@ -14,22 +14,25 @@ def resource_path(relative_path):
     return os.path.join(os.path.abspath("."), relative_path)
 
 def get_releases():
-    # FIXME: Verify that file exists
     log.debug("Fetching releases")
+    if not os.path.isfile(cache_releases_path):
+        return []
     with open(cache_releases_path, "r") as f:
         releases = json.load(f)
     return releases
 
 
 def latest_scraped():
-    # FIXME: Account for empty list
     releases = get_releases()
+    if not releases:
+        return None
     return max(releases, key=lambda r: r["first_seen"])
 
 
 def last_scrape_result():
-    # FIXME: Verify that file exists
     log.debug("Fetching last scrape result")
+    if not os.path.isfile(cache_result_path):
+        return None
     with open(cache_result_path, "r") as f:
         new_releases = json.load(f)["new_releases"]
     return new_releases

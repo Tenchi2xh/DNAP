@@ -23,14 +23,17 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
     def __init__(self, frame):
         super(DnapTaskBarIcon, self).__init__()
         self.frame = frame
+        self.menu = None
         self.set_icon(TRAY_ICON_WHITE)
         self.Bind(wx.adv.EVT_TASKBAR_LEFT_UP, lambda _: self.PopupMenu(self.CreatePopupMenu()))
 
     def CreatePopupMenu(self):
-        # FIXME: If nothing, put "Waiting for first scrape..."
         result = last_scrape_result()
-        new_releases = "%d new release%s" % (result, "s" if result > 0 else "")
-        last_scrape_message = "Last scrape: %s" % (new_releases if result else "no new releases")
+        if result is not None:
+            new_releases = "%d new release%s" % (result, "s" if result > 0 else "")
+            last_scrape_message = "Last scrape: %s" % (new_releases if result else "no new releases")
+        else:
+            last_scrape_message = "Waiting for first scrape..."
 
         menu = wx.Menu()
 
@@ -41,14 +44,17 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
 
         menu.AppendSeparator()
         create_menu_item(menu, last_scrape_message, NOP).Enable(False)
-        self.create_release_menu_item(menu, latest_scraped())
+        latest_release = latest_scraped()
+        if latest_release:
+            self.create_release_menu_item(menu, latest_release)
 
         menu.AppendSeparator()
         create_menu_item(menu, "Exit", self.on_exit)
         return menu
 
-    # FIXME: in case of no releases
     def create_release_menu_item(self, menu, release):
+        if not release:
+            return
         menu.AppendSeparator()
         create_menu_item(menu, "Latest release:", NOP).Enable(False)
         create_menu_item(menu, crop_text(release["title"], limit=45), NOP).Enable(False)
@@ -59,7 +65,6 @@ class DnapTaskBarIcon(wx.adv.TaskBarIcon):
         menu_item.SetBitmap(get_bitmap(release, resize_width=THUMB_SIZE))
 
         menu.Append(menu_item)
-        return menu_item
 
 
     def set_icon(self, path):
