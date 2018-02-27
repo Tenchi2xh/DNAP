@@ -34,3 +34,11 @@
         - [x] Make it work
         - [x] Create icon
     - [ ] Linux
+        - [ ] Test binaries made on Debian on Mint & Manjaro
+        - [ ] Build script generates .deb package https://debian-handbook.info/browse/stable/debian-packaging.html
+        - [ ] Build script generates .rpm package https://docs.fedoraproject.org/quick-docs/en-US/creating-rpm-packages.html
+        - [ ] Packages include Desktop Entries https://developer.gnome.org/integration-guide/stable/desktop-files.html.en
+        - [ ] If all work, add mininim required GLIBC version to readme for linux (`ldd --version == 2.24`)
+- [ ] More detailed scraper model
+    - [ ] Store in database?
+    - [ ] Scrapers follow links for more details?
