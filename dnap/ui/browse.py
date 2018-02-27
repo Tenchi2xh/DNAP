@@ -24,6 +24,7 @@ class BrowseFrame(wx.Frame):
 
         self.releases = sorted(get_releases(), key=lambda release: -release["first_seen"])
         self.labels = ["all"] + sorted(list(set([release["source"] for release in self.releases])))
+        self.current_label = None
 
         self.init_position(435, 730)
         self.init_content()
@@ -132,7 +133,7 @@ class BrowseFrame(wx.Frame):
         self.adding_items = False
 
     def show_releases(self, label):
-        if hasattr(self, "current_label") and label == self.current_label:
+        if label == self.current_label:
             return
 
         if self.thread and self.thread.is_alive():
