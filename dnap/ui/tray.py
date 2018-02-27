@@ -1,15 +1,10 @@
 import wx
-import os
-import json
 import wx.adv
-import requests
 import webbrowser
-from io import BytesIO
 
 from .browse import BrowseFrame
 from .util import create_menu_item, crop_text, get_bitmap
-from ..util import resource_path, get_picture, latest_scraped, last_scrape_result
-from .. import cache_releases_path, cache_result_path
+from ..util import resource_path, latest_scraped, last_scrape_result
 
 
 # FIXME: Should remain the same color when clicked in dark mode in Mac OS

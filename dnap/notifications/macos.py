@@ -1,4 +1,3 @@
-import Foundation
 from AppKit import NSImage, NSUserNotification, NSUserNotificationCenter
 
 
