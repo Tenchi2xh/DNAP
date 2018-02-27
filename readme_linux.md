@@ -1,6 +1,20 @@
-## Debian setup
+# DNAP on Linux
 
-To run on Debian, DNAP needs wxPython 4 (Phoenix), which only exists in the `testing` repository and depends on Python 3.6, which is also only in the `testing` repository.
+## Compiling dependencies
+
+On most distributions that use `apt` as a package manager, installing the Python dependencies with `pip` will compile them. You will need the following dependencies to compile successfully:
+
+```
+sudo apt-get update
+sudo apt-get install libnotify-dev libjpeg-dev libtiff-dev libgtk-3-dev freeglut3 freeglut3-dev libgstreamer-plugins-base1.0-dev libwebkit2gtk-4.0-dev libxtst-dev
+pip3 install -r requirements.txt
+```
+
+## Debian binaries
+
+If you don't want to compile, binaries exists on Debian. But they are as troublesome to use, as they are in the `testing` repository. Warning: this will also probably critically mess up) some of your other packages (Gnome depends on Python 3.5 for example).
+
+DNAP needs wxPython 4 (Phoenix), which only exists in the `testing` repository and depends on Python 3.6, which is also only in the `testing` repository.
 
 To add the `testing` repository to `apt`, add this to `/etc/apt/sources.list`:
 
