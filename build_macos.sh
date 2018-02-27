@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ./clean.sh
 
 mkdir -p build/DNAP.iconset
