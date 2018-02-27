@@ -53,7 +53,7 @@ Install dependencies using the requirements file relevant to your operating syst
 pip3 install -r requirements_macos.txt
 ```
 
-To install the dependencies on Debian, [follow these instructions](readme_debian.md)
+To install the dependencies on Linux, [follow these instructions](readme_linux.md)
 
 Run the application as a module:
 
