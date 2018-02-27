@@ -1,4 +1,14 @@
-
+<p align="right">
+    <a href="https://github.com/Tenchi2xh/DNAP/releases/latest">
+        <img height=27 alt="Latest release" src="https://img.shields.io/github/release/Tenchi2xh/DNAP.svg">
+    </a>
+    <a href="https://github.com/Tenchi2xh/DNAP/releases">
+        <img height=27 alt="Downloads" src="https://img.shields.io/github/downloads/Tenchi2xh/DNAP/total.svg">
+    </a>
+    <a href="https://www.codacy.com/app/Tenchi2xh/DNAP">
+        <img height=27 alt="Code quality" src="https://img.shields.io/codacy/grade/8b44207180614a7c8b70efe76bf23c9f.svg">
+    </a>
+</p>
 <h1>
     <img src=resources/icon/color/256.png width=128 height=128 />
     <br/>
