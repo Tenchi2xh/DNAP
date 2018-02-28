@@ -55,6 +55,12 @@ Download and launch the application from the [releases](https://github.com/Tench
 
 When using the standalone application, logs are written in `~/.dnap/dnap.log` instead of `stdout`.
 
+Linux notes:
+
+- On Debian-based distributions, the `.deb` package found in the releases can be installed using `sudo dpkg -i dnap_[VERSION].deb`
+- The binary requires GLIBC to be at least 2.24. The version can be verified with `ldd --version`.
+- No notifications are implemented as of yet. New releases can for now be seen by watching logs with `tail -f ~/.dnap/dnap.log`.
+
 ### Run from source
 
 Install dependencies using the requirements file relevant to your operating system:
@@ -76,7 +82,7 @@ python3 -m dnap
 Common dependencies:
 
 ```bash
-pip3 install requirements_[macos|windows].txt
+pip3 install requirements_[macos|windows|linux].txt
 pip3 install pyInstaller
 ```
 
@@ -91,6 +97,17 @@ The [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build
 If you want an icon to be generated for the executable, you will need to install [ImageMagick](https://www.imagemagick.org/script/download.php#windows). Install using the option `Install legacy utilities`.
 
 Then, run `build_windows.bat`
+
+### Linux
+
+For Debian based distributions, first install `fpm`:
+
+```bash
+sudo apt-get install ruby ruby-dev rubygems build-essential
+sudo gem install --no-ri --no-rdoc fpm
+```
+
+Then, run `build_linux.sh [VERSION]`. This will generate a binary that *should* work on all distributions as well as a `.deb` package.
 
 ## Attribution
 
