@@ -24,7 +24,7 @@
     - [x] Latest scraped record
     - [x] Mac theme support
 - [ ] Notifications
-    - [ ] Ubuntu https://askubuntu.com/questions/616985/how-do-i-send-desktop-notifications-using-python-3
+    - [x] Linux
     - [x] Windows 10
     - [x] Mac
     - [ ] Non-native fallback for others
@@ -35,10 +35,10 @@
         - [x] Create icon
     - [ ] Linux
         - [ ] Test binaries made on Debian on Mint & Manjaro
-        - [ ] Build script generates .deb package https://debian-handbook.info/browse/stable/debian-packaging.html
-        - [ ] Build script generates .rpm package https://docs.fedoraproject.org/quick-docs/en-US/creating-rpm-packages.html
-        - [ ] Packages include Desktop Entries https://developer.gnome.org/integration-guide/stable/desktop-files.html.en
-        - [ ] If all work, add mininim required GLIBC version to readme for linux (`ldd --version == 2.24`)
+        - [x] Build script generates .deb package
+        - [ ] Build script generates .rpm package
+        - [x] Packages include Desktop Entries
+        - [x] If all work, add mininim required GLIBC version to readme for linux (`ldd --version == 2.24`)
 - [ ] More detailed scraper model
     - [ ] Store in database?
     - [ ] Scrapers follow links for more details?
