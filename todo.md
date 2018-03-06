@@ -28,6 +28,7 @@
     - [x] Windows 10
     - [x] Mac
     - [ ] Non-native fallback for others
+    - [ ] Callbacks: open browser if only 1 release, else browse window
 - [ ] Build scripts for pyInstaller
     - [x] Mac
     - [x] Windows
@@ -42,3 +43,4 @@
 - [ ] More detailed scraper model
     - [ ] Store in database?
     - [ ] Scrapers follow links for more details?
+- [x] Fix focus not given

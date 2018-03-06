@@ -16,7 +16,7 @@ class BrowseFrame(wx.Frame):
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, -1,
             title="DNAP",
-            style=wx.RESIZE_BORDER | wx.CLOSE_BOX | wx.CAPTION | wx.CLIP_CHILDREN | wx.STAY_ON_TOP | wx.FRAME_TOOL_WINDOW
+            style=wx.RESIZE_BORDER | wx.CLOSE_BOX | wx.CAPTION | wx.CLIP_CHILDREN | wx.STAY_ON_TOP
         )
 
         self.adding_items = False
@@ -34,15 +34,18 @@ class BrowseFrame(wx.Frame):
         # FIXME: Find current display id
         display_area = wx.Display(0).GetClientArea()
         display_width, display_height = display_area.GetWidth(), display_area.GetHeight()
+
+        self.SetSize((width, height))
+
         if sys.platform == "darwin":
             # Top-right
-            position = (display_width - width, 0)
+            title_bar_height = self.GetRect().height - self.GetClientRect().height
+            position = (display_width - width, title_bar_height)
         else:
             # Bottom-right
             position = (display_width - width, display_height - height)
 
         self.SetPosition(position)
-        self.SetSize((width, height))
 
     def init_content(self):
         sizer = wx.BoxSizer(wx.VERTICAL)
